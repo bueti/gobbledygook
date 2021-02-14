@@ -2,7 +2,17 @@
 
 %p
 .row
+  .col-md-2
+    = search_form_for @ransack_entries, as: :entries_search, url: entries_path do |f|
+      = f.search_field :title_cont, placeholder: 'Title', class: 'form-control form-control-sm'
+      = f.search_field :description_cont, placeholder: 'Description', class: 'form-control form-control-sm'
+      %br
+      = f.submit
+      = link_to 'reset', entries_path
+      %p
+
+
   .col-md-10
-  .card-columns
-    - @entries.each do |entry|
-      = render 'entries/entry', entry: entry
+    .card-columns
+      - @entries.each do |entry|
+        = render 'entries/entry', entry: entry

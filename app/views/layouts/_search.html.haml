@@ -1,0 +1,6 @@
+= search_form_for @ransack_entries, as: :entries_search, url: entries_path do |f|
+  .input-group
+    = f.search_field :title_cont, class: 'form-control-sm', style: 'float: left; width: 150px; ', placeholder: 'Find an Entry', :autocomplete => :off
+    %span.input-group-append
+      %button.btn.btn-primary.btn-sm{:type => "submit"}
+        %span.fa.fa-search{"aria-hidden" => "true"}

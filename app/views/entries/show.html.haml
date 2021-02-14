@@ -1,12 +1,7 @@
-%p#notice= notice
-
+= link_to 'Entries', entries_path
+\/
+= @entry.title
 %p
-  %b Title:
-  = @entry.title
-%p
-  %b Description:
-  = @entry.description
+= render 'entries/entry', entry: @entry
 
-= link_to 'Edit', edit_entry_path(@entry)
-\|
-= link_to 'Back', entries_path
+

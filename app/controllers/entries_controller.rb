@@ -4,8 +4,8 @@ class EntriesController < ApplicationController
 
   # GET /entries or /entries.json
   def index
-    # @entries = Entry.friendly.find(params[:id])
-    @entries = Entry.all
+    @ransack_entries = Entry.ransack(params[:entries_search], search_key: :entries_search)
+    @entries = @ransack_entries.result.includes(:user)
   end
 
   # GET /entries/1 or /entries/1.json

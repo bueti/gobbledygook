@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
-  def index
-    controller_name.sub('_', ' ').titleize
+  before_action :set_global_variables
+  def set_global_variables
+    @ransack_entries = Entry.ransack(params[:entries_search], search_key: :entries_search)
   end
 
   # private
