@@ -1,6 +1,6 @@
 class Entry < ApplicationRecord
   validates :title, presence: true
-  validates :description, presence: true, length: { minimum: 5 }
+  validates :description, presence: true, length: { minimum: 50 }
 
   belongs_to :user
 
@@ -9,4 +9,7 @@ class Entry < ApplicationRecord
   def to_s
     title
   end
+
+  extend FriendlyId
+  friendly_id :title, use: :slugged
 end

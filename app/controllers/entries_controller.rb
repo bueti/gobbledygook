@@ -2,9 +2,9 @@ class EntriesController < ApplicationController
   before_action :set_entry, only: %i[show edit update destroy]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
-
   # GET /entries or /entries.json
   def index
+    # @entries = Entry.friendly.find(params[:id])
     @entries = Entry.all
   end
 
@@ -62,7 +62,7 @@ class EntriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_entry
-      @entry = Entry.find(params[:id])
+      @entry = Entry.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

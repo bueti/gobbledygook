@@ -1,0 +1,21 @@
+.card
+  .card-header
+    .fa.fa-graduation-cap
+    = link_to entry.title, entry_path(entry)
+  .card-body
+    = entry.description
+
+  .card-footer
+    .row
+      .col-md-6
+        .far.fa-clock
+        = entry.created_at.strftime('%d-%m-%Y')
+      .col-md-6
+        .text-right
+          .fa.fa-chalkboard-teacher
+          = entry.user.username
+  -# - if policy(entry).edit?
+  .card-footer
+    = link_to 'Edit', edit_entry_path(entry), class: 'btn btn-sm btn-warning'
+    = link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' #if policy(entry).destroy?
+

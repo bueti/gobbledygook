@@ -1,3 +1,40 @@
 .jumbotron
   .display-4
     What do you want to learn today?
+  .p-4
+  = render 'layouts/search'
+
+.card-group
+  .card.card-body
+    %h1
+      .fa.fa-graduation-cap
+    = Entry.count
+    goobledygooks explained!
+
+  .card.card-body
+    %h1
+      .fa.fa-chalkboard-teacher
+      /.fa.fa-brain
+    = Entry.distinct.count(:user_id)
+    people contributed
+    .row
+    There are no secrets anymore!
+  .card.card-body
+    %h1
+      .fa.fa-user-graduate
+    = User.count
+    active users
+    .row
+    Join the knowledge sharing community
+  .card.card-body
+    %h1
+      .fa.fa-infinity
+    Lifetime access
+
+%hr
+%h2
+  Latest entries
+.card-columns
+  - @latest_entries.each do |entry|
+    = render 'entries/entry', entry: entry
+%hr
