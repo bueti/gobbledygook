@@ -1,0 +1,38 @@
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  %a.navbar-brand{:href => "/"} Gobbledygook
+  %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
+    %span.navbar-toggler-icon
+  #navbarSupportedContent.collapse.navbar-collapse
+    - if current_user
+      %ul.navbar-nav.mr-auto
+        = render 'layouts/anonymous_menu'
+        %li.nav-item{class: "#{'active font-weight-bold' if current_page?(new_entry_path)}"}
+          = link_to new_entry_path, class: 'nav-link' do
+            .fa.fa-plus
+            New Entry
+        -#%li.nav-item{class: "#{'active font-weight-bold' if current_page?(activity_path)}"}
+        -#  = link_to activity_path, class: 'nav-link' do
+        -#    .fa.fa-bell
+        -#    Activities
+        -#  %li.nav-item{class: "#{'active font-weight-bold' if current_page?(users_path)}"}
+        -#    = link_to users_path, class: 'nav-link' do
+        -#      .fa.fa-user
+        -#      Users
+      -# = render 'layouts/search'
+      %ul.navbar-nav.mr-right
+        %li.nav-item.dropdown
+          %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            %b= current_user.email
+          .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdown"}
+            = link_to edit_user_registration_path, class: "dropdown-item" do
+              .fa.fa-cog
+              %b Account settings
+            = link_to destroy_user_session_path, method: :delete, class: "dropdown-item" do
+              .fa.fa-sign-out-alt
+              %b Sign out
+    - else
+      %ul.navbar-nav.mr-auto
+        = render 'layouts/anonymous_menu'
+      %ul.navbar-nav
+        %li.nav-item= link_to 'Sign Up', new_user_registration_path, class: 'nav-link'
+        %li.nav-item= link_to 'Log In', new_user_session_path, class: 'nav-link'
