@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :entries
-  resources :users, only: [:index]
+  resources :users, only: [:index, :edit, :show, :update]
 
   get 'entries/entry'
 
