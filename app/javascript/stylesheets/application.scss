@@ -1,0 +1,12 @@
+@import "actiontext";
+
+$theme-colors: (
+        "primary": #bf309e,
+        "secondary": #d3b530
+);
+
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+.jumbotron{
+  background-color: #E1BEE7 !important;
+}
