@@ -63,7 +63,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "gobbledygook_production"
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'https://gobbledygook-24722.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'https://gobbledygook.bueti-online.ch' }
 
   config.action_mailer.perform_caching = false
 
