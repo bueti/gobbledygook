@@ -16,10 +16,11 @@
         -#    Activities
 
         -# TODO: Move to admin section
-        %li.nav-item{class: "#{'active font-weight-bold' if current_page?(users_path)}"}
-          = link_to users_path, class: 'nav-link' do
-            .fa.fa-user
-            Users
+        - if current_user&.has_role?(:admin)
+          %li.nav-item{class: "#{'active font-weight-bold' if current_page?(users_path)}"}
+            = link_to users_path, class: 'nav-link' do
+              .fa.fa-user
+              Users
       = render 'layouts/search'
       %ul.navbar-nav.mr-right
         %li.nav-item.dropdown

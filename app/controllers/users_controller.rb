@@ -12,11 +12,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # authorize @user
+    authorize @user
   end
 
   def update
-    # authorize @user
+    authorize @user
     if @user.update(user_params)
       redirect_to users_path, notice: "Roles for #{@user.username} were successfully updated."
     else

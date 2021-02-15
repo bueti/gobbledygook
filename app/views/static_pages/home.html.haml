@@ -1,6 +1,10 @@
 .jumbotron
   .display-4
-    What do you want to learn today?
+    gobbledygook
+    %small (noun)
+  %mark gob·​ble·​dy·​gook | \ ˈgä-bəl-dē-ˌgu̇k  \
+  %br
+  %strong : wordy and generally unintelligible jargon
   .p-4
   = render 'layouts/search'
 
@@ -18,18 +22,18 @@
     = Entry.distinct.count(:user_id)
     people contributed
     .row
-    There are no secrets anymore!
-  .card.card-body
-    %h1
-      .fa.fa-user-graduate
-    = User.count
-    active users
-    .row
-    Join the knowledge sharing community
-  .card.card-body
-    %h1
-      .fa.fa-infinity
-    Lifetime access
+    Sign-up to contribute!
+  -#.card.card-body
+  -#  %h1
+  -#    .fa.fa-user-graduate
+  -#  = User.count
+  -#  active users
+  -#  .row
+  -#  Join the knowledge sharing community
+  -#.card.card-body
+  -#  %h1
+  -#    .fa.fa-infinity
+  -#  Lifetime access
 
 %hr
 %h2
