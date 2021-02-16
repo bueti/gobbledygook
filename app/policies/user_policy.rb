@@ -10,7 +10,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    @user&.has_role?(:admin)
+    @user&.has_role?(:admin) || record.user == @user
   end
 
 end

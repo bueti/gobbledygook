@@ -7,11 +7,6 @@ class User < ApplicationRecord
   has_many :entries
 
   validate :must_have_a_role, on: :update
-  validates_uniqueness_of :username
-
-  def username
-    email.split(/@/).first if self[:username].nil?
-  end
 
   def to_s
     email

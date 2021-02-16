@@ -7,7 +7,7 @@
       = f.search_field :title_cont, placeholder: 'Title', class: 'form-control form-control-sm'
       = f.search_field :description_cont, placeholder: 'Description', class: 'form-control form-control-sm'
       %br
-      = f.submit
+      = f.button :submit, class: 'btn btn-primary'
       = link_to 'reset', entries_path
       %p
 
