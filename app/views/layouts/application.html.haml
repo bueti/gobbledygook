@@ -9,6 +9,7 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    %script{:async => "", "data-domain" => "gobbledygook.bueti-online.ch", :defer => "defer", :src => "https://plausible.io/js/plausible.js"}
   %body
     = render 'layouts/header'
     = render 'layouts/messages'
