@@ -41,5 +41,15 @@
   Latest entries
 .card-columns
   - @latest_entries.each do |entry|
-    = render 'entries/entry', entry: entry
+    .card
+    .card-header
+      .fa.fa-graduation-cap
+      = link_to entry.title, entry_path(entry)
+    .card-body
+      = entry.description.to_plain_text.truncate(70)
+    .card-footer
+      .row
+        .col-md-6
+          .far.fa-clock
+          = entry.created_at.strftime('%d-%m-%Y')
 %hr
