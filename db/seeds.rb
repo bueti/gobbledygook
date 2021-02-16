@@ -1,4 +1,4 @@
-User.create!(email: 'admin@example.com', username: 'Admin', password: 'password', password_confirmation: 'password')
+User.create!(email: 'b.buetikofer+a@outlook.com', username: 'Admin', password: 'password', password_confirmation: 'password')
 User.create!(email: 'editor@example.com', username: 'Editor', password: 'password', password_confirmation: 'password')
 User.create!(email: 'contributor@example.com', username: 'Contributor', password: 'password', password_confirmation: 'password')
 
