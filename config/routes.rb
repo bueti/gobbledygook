@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :edit, :show, :update]
 
   get 'entries/entry'
+  get 'about', to: 'static_pages#about'
+  get 'privacy_policy', to: 'static_pages#privacy'
 
   root 'static_pages#home'
 
