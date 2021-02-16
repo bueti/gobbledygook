@@ -46,7 +46,8 @@
       .fa.fa-graduation-cap
       = link_to entry.title, entry_path(entry)
     .card-body
-      = entry.description.to_plain_text.truncate(70)
+      = truncate(entry.description.to_plain_text, length: 100, separator: ' ')
+      = link_to "Continue reading", entry_path(entry)
     .card-footer
       .row
         .col-md-6
