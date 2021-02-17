@@ -1,12 +1,13 @@
 %hr
 %footer
-  -#.container.footer-container
   .container
     .row
       .col-md-4
-        .far.fa-copyright
-        = Time.now.year
-        Benjamin Buetikofer
+        .fab.fa-creative-commons
+        .fab.fa-creative-commons-by
+        .fab.fa-creative-commons-nc
+        .fab.fa-creative-commons-sa
+        = link_to 'License', license_path
         .row
         .fa.fa-envelope
         = mail_to 'me@bueti-online.ch'
@@ -15,13 +16,12 @@
         .row
         .fa.fa-file-contract
         = link_to 'Privacy policy', privacy_policy_path
-        -#.row
-        -#= link_to 'Terms and conditions', '#'#terms_path
+
       .col-md-4
         .row
         .fa.fa-info-circle
         = link_to 'About', about_path
         .row
-        .fa.fa-hashtag
+        .fab.fa-twitter
         = link_to 'Twitter', 'https://twitter.com/gran_viaje'
 %br

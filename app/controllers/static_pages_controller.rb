@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home, :about, :privacy]
+  skip_before_action :authenticate_user!, only: [:home, :about, :privacy, :license]
 
   def home
     @entries = Entry.all.limit(3)

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'entries/entry'
   get 'about', to: 'static_pages#about'
   get 'privacy_policy', to: 'static_pages#privacy'
+  get 'license', to: 'static_pages#license'
 
   root 'static_pages#home'
 
