@@ -10,6 +10,7 @@
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     %script{:async => "", "data-domain" => "gobbledygook.bueti-online.ch", :defer => "defer", :src => "https://plausible.io/js/plausible.js"}
+    = yield :og_header
   %body
     = render 'layouts/header'
     = render 'layouts/messages'
