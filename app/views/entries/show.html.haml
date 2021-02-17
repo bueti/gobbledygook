@@ -1,7 +1,8 @@
 - content_for :og_header do
   = tag("meta", property: "og:title", content: @entry.title)
   = tag("meta", property: "og:description", content: strip_tags(@entry.description.to_plain_text))
-  -# = tag("meta", property: "og:image", content: asset_url("logos/logo-square-250x250.png"))
+  = tag("meta", property: "og:site_name", content: 'Gobbledygook')
+  = tag("meta", property: "og:image", content: asset_url("logo.png"))
 
 = link_to 'Entries', entries_path
 \/
