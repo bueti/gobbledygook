@@ -2,10 +2,11 @@
 
 set +e
 
+version=$1
 docker build .
 image_id=$(docker images|head -2 | grep none | awk '{print $3}')
-docker tag ${image_id} bueti/gobbledygook:latest
-docker save -o gobbledygook-1.0.tar bueti/gobbledygook:latest
-gzip -f gobbledygook-1.0.tar
-scp gobbledygook-1.0.tar.gz aio:
-rm -f gobbledygook-1.0.tar.gz
+docker tag ${image_id} bueti/gobbledygook:${version}
+docker save -o gobbledygook-${version}.tar bueti/gobbledygook:${version}
+gzip -f gobbledygook-${version}.tar
+scp gobbledygook-${version}.tar.gz aio:
+rm -f gobbledygook-${version}.tar.gz
