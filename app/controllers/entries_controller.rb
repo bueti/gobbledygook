@@ -53,12 +53,13 @@ class EntriesController < ApplicationController
   end
 
   # GET /entries/1 or /entries/1.json
-  def drafts
+  def personal
     @entries = Entry.all.where(user: current_user)
   end
 
   # PATCH/PUT /entries/1 or /entries/1.json
   def update
+    # @entry.draft = false
     respond_to do |format|
       if @entry.update(entry_params)
         format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
