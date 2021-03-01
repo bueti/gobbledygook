@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def set_global_variables
-    @ransack_entries = Entry.ransack(params[:entries_search], search_key: :entries_search)
+    @ransack_entries = Entry.without_drafts.ransack(params[:entries_search], search_key: :entries_search)
   end
 
   protected

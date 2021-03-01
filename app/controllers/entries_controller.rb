@@ -1,16 +1,15 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: %i[show edit update destroy]
-  skip_before_action :authenticate_user!, only: [:index, :show]
+  skip_before_action :authenticate_user!, only: %i[index show]
 
   # GET /entries or /entries.json
   def index
-    @ransack_entries = Entry.ransack(params[:entries_search], search_key: :entries_search)
+    @ransack_entries = Entry.without_drafts.ransack(params[:entries_search], search_key: :entries_search)
     @entries = @ransack_entries.result.includes(:user)
   end
 
   # GET /entries/1 or /entries/1.json
-  def show
-  end
+  def show; end
 
   # GET /entries/new
   def new
@@ -18,8 +17,7 @@ class EntriesController < ApplicationController
   end
 
   # GET /entries/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /entries or /entries.json
   def create
@@ -28,7 +26,7 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       if @entry.save
-        format.html { redirect_to @entry, notice: "Entry was successfully created." }
+        format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
         format.json { render :show, status: :created, location: @entry }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,11 +35,34 @@ class EntriesController < ApplicationController
     end
   end
 
+  # POST /entries or /entries.json
+  def create_draft
+    @entry = Entry.new(entry_params)
+    @entry.user = current_user
+    @entry.draft = true
+
+    respond_to do |format|
+      if @entry.save
+        format.html { redirect_to @entry, notice: 'Draft was successfully created.' }
+        format.json { render :show, status: :created, location: @entry }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # GET /entries/1 or /entries/1.json
+  def personal
+    @entries = Entry.all.where(user: current_user)
+  end
+
   # PATCH/PUT /entries/1 or /entries/1.json
   def update
+    # @entry.draft = false
     respond_to do |format|
       if @entry.update(entry_params)
-        format.html { redirect_to @entry, notice: "Entry was successfully updated." }
+        format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
         format.json { render :show, status: :ok, location: @entry }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,19 +75,20 @@ class EntriesController < ApplicationController
   def destroy
     @entry.destroy
     respond_to do |format|
-      format.html { redirect_to entries_url, notice: "Entry was successfully destroyed." }
+      format.html { redirect_to entries_url, notice: 'Entry was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_entry
-      @entry = Entry.friendly.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def entry_params
-      params.require(:entry).permit(:title, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_entry
+    @entry = Entry.friendly.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def entry_params
+    params.require(:entry).permit(:title, :description, :draft)
+  end
 end

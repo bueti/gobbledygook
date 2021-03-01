@@ -1,4 +1,6 @@
 class Entry < ApplicationRecord
+  scope :without_drafts, -> { where('draft = false') }
+
   validates :title, presence: true
   validates :description, presence: true, length: { minimum: 50 }
 

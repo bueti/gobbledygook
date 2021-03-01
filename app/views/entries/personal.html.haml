@@ -1,0 +1,9 @@
+%h3
+  .text-center
+    My Entries
+    .badge.badge-info
+      = @entries.count
+
+.card-columns
+  - @entries.each do |entry|
+    = render 'entries/entry', entry: entry
