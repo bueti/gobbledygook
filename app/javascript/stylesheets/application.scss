@@ -5,8 +5,22 @@ $theme-colors: (
         "secondary": #d3b530
 );
 
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
-.jumbotron{
+.jumbotron {
   background-color: #E1BEE7 !important;
+}
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
 }

@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :entries
+  resources :entries do
+    collection do
+      get  'entry'
+      post 'create_draft'
+    end
+  end
   resources :users, only: [:index, :edit, :show, :update]
 
-  get 'entries/entry'
-  get 'about', to: 'static_pages#about'
+  get 'about',          to: 'static_pages#about'
   get 'privacy_policy', to: 'static_pages#privacy'
-  get 'license', to: 'static_pages#license'
+  get 'license',        to: 'static_pages#license'
 
   root 'static_pages#home'
 

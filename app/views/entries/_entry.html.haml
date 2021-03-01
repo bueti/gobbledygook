@@ -16,6 +16,7 @@
           = entry.user.username
   - if policy(entry).edit?
     .card-footer
+      = link_to 'Publish', '#', class: 'btn btn-sm btn-primary' if entry.draft
       = link_to 'Edit', edit_entry_path(entry), class: 'btn btn-sm btn-warning'
       = link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' if policy(entry).destroy?
 

@@ -11,19 +11,17 @@
           = link_to new_entry_path, class: 'nav-link' do
             .fa.fa-plus
             New Entry
-        -#%li.nav-item{class: "#{'active font-weight-bold' if current_page?(activity_path)}"}
-        -#  = link_to activity_path, class: 'nav-link' do
-        -#    .fa.fa-bell
-        -#    Activities
-
-        -# TODO: Move to admin section
+        %li.nav-item{class: "#{'active font-weight-bold' if current_page?(new_entry_path)}"}
+          = link_to '#', class: 'nav-link' do
+            .fas.fa-portrait
+            My Entries
+      = render 'layouts/search'
+      %ul.navbar-nav.mr-right
         - if current_user&.has_role?(:admin)
           %li.nav-item{class: "#{'active font-weight-bold' if current_page?(users_path)}"}
             = link_to users_path, class: 'nav-link' do
               .fa.fa-user
               Users
-      = render 'layouts/search'
-      %ul.navbar-nav.mr-right
         %li.nav-item.dropdown
           %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
             %b= current_user.email
