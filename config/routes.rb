@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :entries do
     collection do
       get  'entry'
+      get  'drafts'
       post 'create_draft'
     end
   end

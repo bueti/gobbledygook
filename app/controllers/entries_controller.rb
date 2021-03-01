@@ -52,6 +52,11 @@ class EntriesController < ApplicationController
     end
   end
 
+  # GET /entries/1 or /entries/1.json
+  def drafts
+    @entries = Entry.all.where(user: current_user)
+  end
+
   # PATCH/PUT /entries/1 or /entries/1.json
   def update
     respond_to do |format|
