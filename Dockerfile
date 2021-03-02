@@ -39,7 +39,7 @@ COPY . .
 RUN bundle config set without 'test development' && \
     bundle install --jobs 20 --retry 5 && \
     yarn install --check-files && \
-    RAILS_ENV=production SECRET_KEY_BASE=`bin/rake secret` rails assets:precompile && \
+    RAILS_ENV=production rails assets:precompile && \
     yarn cache clean
 
 FROM base as app-prod
