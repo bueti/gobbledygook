@@ -8,6 +8,8 @@ services:
       POSTGRES_PASSWORD: password
   web:
     image: bueti/gobbledygook_${BUILD}
+    environment:
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     build:
       context: .
       target: app-${BUILD}
