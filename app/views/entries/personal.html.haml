@@ -4,6 +4,23 @@
     .badge.badge-info
       = @entries.count
 
-.card-columns
-  - @entries.each do |entry|
-    = render 'entries/entry', entry: entry
+.row
+  .col-md-2
+    = search_form_for @ransack_entries, as: :entries_search, url: personal_entries_path do |f|
+      = f.search_field :title_cont, placeholder: 'Title', class: 'form-control form-control-sm'
+      = f.search_field :description_cont, placeholder: 'Description', class: 'form-control form-control-sm'
+      - if params[:entries_search] && params[:entries_search][:draft_true]
+        = check_box_tag 'entries_search[draft_true]', 't', checked: 'checked'
+      - else
+        = check_box_tag 'entries_search[draft_true]', 't'
+      Drafts Only
+
+      %br
+      = f.button :submit, class: 'btn btn-primary'
+      = link_to 'reset', personal_entries_path
+      %p
+
+  .col-md-10
+    .card-columns
+      - @entries.each do |entry|
+        = render 'entries/entry', entry: entry
