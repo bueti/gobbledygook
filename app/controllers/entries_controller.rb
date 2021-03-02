@@ -54,7 +54,8 @@ class EntriesController < ApplicationController
 
   # GET /entries/1 or /entries/1.json
   def personal
-    @entries = Entry.all.where(user: current_user)
+    @ransack_entries = Entry.ransack(params[:entries_search], search_key: :entries_search)
+    @entries = @ransack_entries.result.includes(:user).where(user: current_user)
   end
 
   # PATCH/PUT /entries/1 or /entries/1.json
