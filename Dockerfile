@@ -1,33 +1,20 @@
-FROM ruby:2.7.2-slim-buster as base
+# syntax=docker/dockerfile:1.2
+FROM ruby:2.7.2-alpine as base
 
-RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
-    postgresql-client \
-    sqlite3 && \
-    apt autoremove -y && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    truncate -s 0 /var/log/*log
+RUN apk add --no-cache postgresql-dev tzdata bash
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 
 FROM base as builder
 
-RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -qy --no-install-recommends \
-    build-essential \
-    curl \
-    libsqlite3-dev \
-    libpq-dev \
-    software-properties-common && \
-    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
-    curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -qy nodejs yarn && \
-    apt autoremove -y && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    truncate -s 0 /var/log/*log
+RUN apk add --no-cache \
+  build-base \
+  gcc \
+  nodejs \
+  yarn
 
-WORKDIR /app
-COPY Gemfile* ./
-
-FROM builder AS dev-build
+FROM builder AS dev-builder
 WORKDIR /app
 COPY . .
 RUN bundle config set without 'production' && \
@@ -36,17 +23,17 @@ RUN bundle config set without 'production' && \
     rails assets:precompile && \
     yarn cache clean
 
-FROM base as dev
+FROM base as app-dev
 WORKDIR /app
-COPY --from=dev-build /usr/local/bundle/ /usr/local/bundle/
-COPY --from=dev-build /app .
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+COPY --from=dev-builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=dev-builder /usr/bin/node* /usr/bin/
+COPY --from=dev-builder /usr/bin/yarn* /usr/bin/
+COPY --from=dev-builder /app .
+
 EXPOSE 3000
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
 
-FROM builder AS prod-build
+FROM builder AS prod-builder
 WORKDIR /app
 COPY . .
 RUN bundle config set without 'test development' && \
@@ -55,12 +42,12 @@ RUN bundle config set without 'test development' && \
     RAILS_ENV=production rails assets:precompile && \
     yarn cache clean
 
-FROM base as prod
+FROM base as app-prod
 WORKDIR /app
-COPY --from=prod-build /app .
-COPY --from=prod-build /usr/local/bundle/ /usr/local/bundle/
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+COPY --from=prod-builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=prod-builder /usr/bin/node* /usr/bin/
+COPY --from=prod-builder /usr/bin/yarn* /usr/bin/
+COPY --from=prod-builder /app .
+
 EXPOSE 3000
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb", "-e", "production"]
