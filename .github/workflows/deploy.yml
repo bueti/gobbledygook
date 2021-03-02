@@ -38,6 +38,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-buildx-
 
+    - name: Inject master.key
+      run: echo "${{ secrets.RAILS_MASTER_KEY }}" > config/master.key
+
     - name: Build and push app
       env:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
